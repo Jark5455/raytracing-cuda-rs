@@ -10,7 +10,7 @@ pub fn linear_to_gamma(linear: f32) -> f32 {
         return linear.powf(1.0 / 2.2);
     }
 
-    return 0.0;
+    0.0
 }
 
 pub fn write_color(color: &Color) {
@@ -23,7 +23,7 @@ pub fn write_color(color: &Color) {
     let ig = (INTENSITY.clamp(g) * 256.0) as u8;
     let ib = (INTENSITY.clamp(b) * 256.0) as u8;
 
-    print!("{} {} {}\n", ir, ig, ib);
+    println!("{} {} {}", ir, ig, ib);
 }
 
 impl Color {

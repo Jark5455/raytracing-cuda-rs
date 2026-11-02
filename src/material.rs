@@ -16,9 +16,9 @@ macro_rules! materials {
         #[derive(Copy, Clone, Debug)]
         pub enum $name { $($ty($ty)),+ }
 
-        impl crate::material::Material for $name {
+        impl $crate::material::Material for $name {
             #[inline(always)]
-            fn scatter(&self, rng: &mut impl rand::Rng, r: &crate::ray::Ray, rec: crate::hitable::HitRecord) -> Option<(crate::color::Color, crate::ray::Ray)> {
+            fn scatter(&self, rng: &mut impl rand::Rng, r: &$crate::ray::Ray, rec: crate::hitable::HitRecord) -> Option<(crate::color::Color, crate::ray::Ray)> {
                 match self {
                     $( $name::$ty(obj) => obj.scatter(rng, r, rec), )+
                 }
@@ -41,7 +41,7 @@ pub struct Lambertian {
 }
 
 impl Material for Lambertian {
-    fn scatter(&self, rng: &mut impl Rng, ray_in: &Ray, rec: HitRecord) -> Option<(Color, Ray)> {
+    fn scatter(&self, rng: &mut impl Rng, _ray_in: &Ray, rec: HitRecord) -> Option<(Color, Ray)> {
         let mut scatter_direction = rec.normal + Vec4::random_vec3_unit(rng);
 
         if scatter_direction.vec3_near_zero() {
@@ -103,13 +103,13 @@ impl Material for Dielectric {
         let cos_theta = Vec4::dot(&-unit_direction, &rec.normal).min(1.0);
         let sin_theta = (1.0 - cos_theta * cos_theta).sqrt();
 
-        let direction: Vec4;
+        
 
-        if ri * sin_theta > 1.0 || Self::reflectance(cos_theta, ri) > rng.random::<f32>() {
-            direction = Vec4::reflect(&unit_direction, &rec.normal);
+        let direction: Vec4 = if ri * sin_theta > 1.0 || Self::reflectance(cos_theta, ri) > rng.random::<f32>() {
+            Vec4::reflect(&unit_direction, &rec.normal)
         } else {
-            direction = Vec4::refract(&unit_direction, &rec.normal, ri);
-        }
+            Vec4::refract(&unit_direction, &rec.normal, ri)
+        };
 
         let scattered = Ray::new(rec.p, direction);
         Some((attenuation, scattered))

@@ -49,9 +49,9 @@ macro_rules! hitables {
         #[derive(Copy, Clone)]
         pub enum $name { $($ty($ty)),+ }
 
-        impl crate::hitable::Hitable for $name {
+        impl $crate::hitable::Hitable for $name {
             #[inline(always)]
-            fn hit(&self, r: &crate::ray::Ray, ray_t: crate::interval::Interval) -> Option<crate::hitable::HitRecord> {
+            fn hit(&self, r: &$crate::ray::Ray, ray_t: crate::interval::Interval) -> Option<crate::hitable::HitRecord> {
                 match self {
                     $( $name::$ty(obj) => obj.hit(r, ray_t), )+
                 }

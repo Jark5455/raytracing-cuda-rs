@@ -2,7 +2,6 @@ use std::ops::{Add, Mul, Sub, Div, Neg};
 use bytemuck::Zeroable;
 use cuda_core::DeviceCopy;
 use rand::Rng;
-use rand_pcg::Lcg64Xsh32;
 
 // why vec4? see https://leimao.github.io/blog/CUDA-Data-Alignment/
 
@@ -98,9 +97,9 @@ impl Vec4 {
         let on_unit_sphere = Self::random_vec3_unit(rng);
 
         if Vec4::dot(&on_unit_sphere, &normal) > 0.0 {
-            return on_unit_sphere;
+            on_unit_sphere
         } else {
-            return -on_unit_sphere;
+            -on_unit_sphere
         }
     }
 

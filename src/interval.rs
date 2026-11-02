@@ -27,5 +27,5 @@ impl Interval {
     }
 }
 
-const empty: Interval = Interval { min: f32::INFINITY, max: f32::NEG_INFINITY };
-const universe: Interval = Interval { min: f32::NEG_INFINITY, max: f32::INFINITY };
+const EMPTY: Interval = Interval { min: f32::INFINITY, max: f32::NEG_INFINITY };
+const UNIVERSE: Interval = Interval { min: f32::NEG_INFINITY, max: f32::INFINITY };
