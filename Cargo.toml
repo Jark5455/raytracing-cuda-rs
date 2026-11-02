@@ -15,3 +15,7 @@ cuda-core = { git = "https://github.com/NVIDIA/cuda-rust.git" }
 rand = { version = "0.9", default-features = false, features = ["small_rng"] }
 rand_pcg = { version = "0.9", default-features = false }
 bytemuck = "1.25.2"
+
+[dev-dependencies]
+criterion = { version = "0.8", default-features = false }
+rayon = "1.11"

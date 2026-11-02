@@ -6,6 +6,8 @@ mod hitable;
 mod sphere;
 mod interval;
 mod material;
+#[cfg(test)]
+mod test;
 
 use cuda_core::{ContextLimit, CudaContext, DeviceBuffer, DeviceCopy, LaunchConfig2D};
 use cuda_device::{DisjointSlice, kernel, launch_contract, thread};
